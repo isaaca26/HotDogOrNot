@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:HotDogOrNot.xcodeproj">
+      location = "self:/Users/anand2nigam/Documents/Xcode/HotDogOrNot/HotDogOrNot.xcodeproj">
    </FileRef>
 </Workspace>
