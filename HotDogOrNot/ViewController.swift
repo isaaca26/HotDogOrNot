@@ -14,27 +14,36 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
 
     @IBOutlet weak var imageView: UIImageView!
     
+    @IBOutlet weak var pictureLabel: UILabel!
+    
+    
     let imagePicker = UIImagePickerController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         imagePicker.delegate = self
-        imagePicker.sourceType = .camera
+
         imagePicker.allowsEditing = false
     
     }
 
+    // MARK:- Configure Image Picking
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         
        if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
             imageView.image = pickedImage
         
+        // Need to convert image to CIImage(CoreImageImage) to be used by the coreml model
         guard let ciImage = CIImage(image: pickedImage) else {
             fatalError("Could not convert to CIImage")
         }
         
-        detectImage(image: ciImage)
+        // To call the CoreML Model function in the background thread
+        DispatchQueue.main.async {
+             self.detectImage(image: ciImage)
+        }
+       
         
         }
         
@@ -42,7 +51,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         
     }
     
-    
+    // MARK:- CoreML Model Function
     func detectImage( image: CIImage) {
         
         // Loading the Model
@@ -55,16 +64,18 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             guard let results = request.results as? [VNClassificationObservation] else {
                 fatalError("Model failed to process the image")
             }
+            print(results)
             
             if let firstResult = results.first {
                 if firstResult.identifier.contains("hotdog") {
                     self.navigationItem.title = "HotDog!"
-                    
                 }
                 else {
                     self.navigationItem.title = "Not HotDog!"
                 }
+                self.pictureLabel.text = firstResult.identifier
             }
+            
             
         }
         
@@ -80,9 +91,34 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
 
+    // MARK:- Camera Tapped Actions
     @IBAction func cameraTapped(_ sender: UIBarButtonItem) {
         
-        present(imagePicker, animated: true, completion: nil)
+        let alert = UIAlertController(title: "Choose Image Source", message: "", preferredStyle: .actionSheet)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+            let cameraAction = UIAlertAction(title: "Camera", style: .default) { ( alertAction) in
+                self.imagePicker.sourceType = .camera
+                self.present(self.imagePicker, animated: true, completion: nil)
+            }
+            alert.addAction(cameraAction)
+        }
+        
+        if UIImagePickerController.isSourceTypeAvailable(.photoLibrary){
+            let photoLibraryAction = UIAlertAction(title: "Photo Library", style: .default) { (alertAction) in
+                self.imagePicker.sourceType = .photoLibrary
+                self.present(self.imagePicker, animated: true, completion: nil)
+            }
+            alert.addAction(photoLibraryAction)
+        }
+        
+        alert.addAction(cancelAction)
+        
+        
+        
+        present(alert, animated: true, completion: nil)
 
     }
     
