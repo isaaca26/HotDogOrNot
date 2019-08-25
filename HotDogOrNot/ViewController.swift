@@ -2,20 +2,15 @@
 //  ViewController.swift
 //  HotDogOrNot
 //
-//  Created by Anand Nigam on 26/07/18.
-//  Copyright © 2018 Anand Nigam. All rights reserved.
-//
 
 import UIKit
 import CoreML
 import Vision
 
 class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-
+    
     @IBOutlet weak var imageView: UIImageView!
-    
     @IBOutlet weak var pictureLabel: UILabel!
-    
     
     let imagePicker = UIImagePickerController()
     
@@ -23,35 +18,36 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         super.viewDidLoad()
         
         imagePicker.delegate = self
-
+        
         imagePicker.allowsEditing = false
-    
+        
     }
-
-    // MARK:- Configure Image Picking
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+    
+    //Configure Image Picking
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any])
+    {
+        let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
         
-       if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+        if let pickedImage = info[convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.originalImage)] as? UIImage {
             imageView.image = pickedImage
-        
-        // Need to convert image to CIImage(CoreImageImage) to be used by the coreml model
-        guard let ciImage = CIImage(image: pickedImage) else {
-            fatalError("Could not convert to CIImage")
-        }
-        
-        // To call the CoreML Model function in the background thread
-        DispatchQueue.main.async {
-             self.detectImage(image: ciImage)
-        }
-       
-        
+            
+            // Need to convert image to CIImage(CoreImageImage) to be used by the CoreML model
+            guard let ciImage = CIImage(image: pickedImage) else {
+                fatalError("Could not convert to CIImage")
+            }
+            
+            // To call the CoreML Model function in the background thread
+            DispatchQueue.main.async {
+                self.detectImage(image: ciImage)
+            }
+            
         }
         
         imagePicker.dismiss(animated: true, completion: nil)
         
     }
     
-    // MARK:- CoreML Model Function
+    //CoreML Model Function
     func detectImage( image: CIImage) {
         
         // Loading the Model
@@ -68,15 +64,13 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             
             if let firstResult = results.first {
                 if firstResult.identifier.contains("hotdog") {
-                    self.navigationItem.title = "HotDog!"
+                    self.navigationItem.title = "Hot Dog!"
                 }
                 else {
-                    self.navigationItem.title = "Not HotDog!"
+                    self.navigationItem.title = "Not Hotdog!"
                 }
                 self.pictureLabel.text = firstResult.identifier
             }
-            
-            
         }
         
         
@@ -90,8 +84,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         }
     }
     
-
-    // MARK:- Camera Tapped Actions
+    
+    //Camera Tapped Actions
     @IBAction func cameraTapped(_ sender: UIBarButtonItem) {
         
         let alert = UIAlertController(title: "Choose Image Source", message: "", preferredStyle: .actionSheet)
@@ -116,12 +110,15 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         
         alert.addAction(cancelAction)
         
-        
-        
         present(alert, animated: true, completion: nil)
-
     }
-    
-
 }
 
+
+fileprivate func convertFromUIImagePickerControllerInfoKeyDictionary(_ input: [UIImagePickerController.InfoKey: Any]) -> [String: Any] {
+    return Dictionary(uniqueKeysWithValues: input.map {key, value in (key.rawValue, value)})
+}
+
+fileprivate func convertFromUIImagePickerControllerInfoKey(_ input: UIImagePickerController.InfoKey) -> String {
+    return input.rawValue
+}

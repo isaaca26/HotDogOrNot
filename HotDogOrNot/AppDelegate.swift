@@ -2,9 +2,6 @@
 //  AppDelegate.swift
 //  HotDogOrNot
 //
-//  Created by Anand Nigam on 26/07/18.
-//  Copyright © 2018 Anand Nigam. All rights reserved.
-//
 
 import UIKit
 
@@ -14,7 +11,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         return true
     }

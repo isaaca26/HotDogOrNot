@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="hBK-Ho-NSH">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="hBK-Ho-NSH">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -18,9 +18,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="J3N-O7-sqx">
-                                <rect key="frame" x="0.0" y="116" width="375" height="551"/>
-                            </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PRa-xj-eli">
                                 <rect key="frame" x="0.0" y="667" width="375" height="0.0"/>
                                 <color key="backgroundColor" red="1" green="0.46580523109999999" blue="0.26444394659999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -28,15 +25,18 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="J3N-O7-sqx">
+                                <rect key="frame" x="0.0" y="108" width="375" height="551"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="PRa-xj-eli" secondAttribute="bottom" id="1u2-d4-mkv"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="PRa-xj-eli" secondAttribute="trailing" id="2MV-yP-8hd"/>
-                            <constraint firstItem="J3N-O7-sqx" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="AXh-Ga-Eyt"/>
+                            <constraint firstItem="J3N-O7-sqx" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="-8" id="AXh-Ga-Eyt"/>
                             <constraint firstItem="PRa-xj-eli" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Ixv-Ex-iEg"/>
                             <constraint firstItem="J3N-O7-sqx" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="JXw-fu-klU"/>
-                            <constraint firstItem="PRa-xj-eli" firstAttribute="top" secondItem="J3N-O7-sqx" secondAttribute="bottom" id="MUb-iv-Svh"/>
+                            <constraint firstItem="PRa-xj-eli" firstAttribute="top" secondItem="J3N-O7-sqx" secondAttribute="bottom" constant="8" id="MUb-iv-Svh"/>
                             <constraint firstItem="J3N-O7-sqx" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="oiy-IQ-aHX"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
